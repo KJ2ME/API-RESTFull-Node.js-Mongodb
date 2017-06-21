@@ -9,7 +9,7 @@ const userSchema = new Schema({
   email: { type: String, unique: true, lowercase: true},
   displayName: String,
   avatar: String,
-  password: { type: String, select: false},
+  password: { type: String, required: true},
   signupDate: { type: Date, default: Date.now()},
   lastLogin: Date
 })
@@ -29,6 +29,13 @@ userSchema.pre('save', function(next){
     });
   });
 });
+
+userSchema.methods.comparePassword = function(candidatePassword, callback) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return callback(err)
+        callback(null, isMatch)
+    })
+}
 
 userSchema.methods.gravatar = function (){
   if(!this.email) return 'https://gravatar.com/avatar/?s=200&d=retro'
