@@ -17,16 +17,25 @@ function signUp(req, res){
   })
 }
 
-function signIn(){
-  user.find({email: req.body.email}, (err, user) =>{
-    if(err) return res.status(500).send({message: `Error al registrarse ${err}`});
-    if(!user) return res.status(404).send({message: 'No existe el usuario'});
+function signIn(req,res) {
+  User.findOne({ email: req.body.email}, function (err, user) {
+    if (err) return res.status(500).send({message: err})
+    if (user.length === 0) return res.status(404).send({message: 'No existe el usuario.'})
+    user.comparePassword(req.body.password, function (err,match) {
+      if (err) return res.status(500).send({message: err})
 
-    req.user = user
-    res.status(200).send({
-      message: 'Te has logueado correctamente',
-      token: service.createToken(user)
+      if (match) {
+        res.status(200).send({
+          message: 'Has iniciado sesión.',
+          token: servicios.createToken(user)
+        })
+      } else {
+        res.status(401).send({
+          message: 'Datos incorrectos.'
+        })
+      }
     })
+
   })
 }
 
