@@ -1,8 +1,9 @@
-# API-RESTFull-Node.js-Mongodb (Fixed login)
+# API-RESTFull-Node.js-Mongodb (Fixed)
 
 This is the files with some fixes from this youtube tutorial (it is not mine): https://www.youtube.com/playlist?list=PLUdlARNXMVkk7E88zOrphPyGdS50Tadlr
 
-Only fix 2 problems:
+Errors solved:
 
- 1. "user.isModified is not a function" error.
- 2. The user login not have password validation.
+ - "user.isModified is not a function" error.
+ - The user login not have password validation.
+ - Password is not "hashed" when update.
