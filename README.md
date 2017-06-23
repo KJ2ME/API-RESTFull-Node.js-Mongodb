@@ -6,4 +6,4 @@ Errors solved:
 
  - "user.isModified is not a function" error.
  - The user login not have password validation.
- - Password is not "hashed" when update.
+
